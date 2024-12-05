@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- ===== CSS ===== -->
+        <link rel="stylesheet" href="style.css">
+
+        <!-- ===== BOX ICONS ===== -->
+        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+        <title>Login</title>
+    </head>
+    <body>
+        <div class="l-form">
+            <div class="shape1"></div>
+            <div class="shape2"></div>
+
+            <div class="form">
+                <form id="loginForm" class="form__content">
+                    <h1 class="form__title">Login</h1>
+
+                    <div class="form__div form__div-one">
+                        <div class="form__icon">
+                            <i class='bx bx-phone'></i>
+                        </div>
+
+                        <div class="form__div-input">
+                            <label for="phone" class="form__label">Phone Number</label>
+                            <input type="text" id="phone" class="form__input" pattern="^\d{10}$" title="Please enter a valid 10-digit phone number" required>
+                        </div>
+                    </div>
+
+                    <div class="form__div">
+                        <div class="form__icon">
+                            <i class='bx bx-lock'></i>
+                        </div>
+
+                        <div class="form__div-input">
+                            <label for="password" class="form__label">Password</label>
+                            <input type="password" id="password" class="form__input" required>
+                        </div>
+                    </div>
+
+                    <input type="submit" class="form__button" value="Login">
+                    <p style="text-align: center;">
+                        New user? <a href="signup.html" class="form__link">Sign up here</a>
+                      </p>                      
+                </form>
+
+        <script>
+            // Handle form submission and validate phone and password
+            document.getElementById('loginForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent form from submitting
+        
+                // Get the form values
+                const phone = document.getElementById('phone').value;
+                const password = document.getElementById('password').value;
+        
+                // Retrieve stored data from localStorage
+                const storedPhone = localStorage.getItem('userPhone');
+                const storedPassword = localStorage.getItem('userPassword');
+        
+                // Validate phone number and password
+                if (phone !== storedPhone || password !== storedPassword) {
+                    alert("Invalid phone number or password. Please try again.");
+                    return; // Stop form submission if validation fails
+                }
+        
+                // If validation passes, show success message and redirect to home page
+                alert("Login successful!");
+        
+                // Redirect to the home page automatically after 1 second to give the user a chance to see the success message
+                setTimeout(function() {
+                    window.location.href = "home.html"; // Change to your actual home page URL
+                }, 1000); // Redirect after 1 second
+            });
+        
+            /*===== FOCUS =====*/
+            const inputs = document.querySelectorAll(".form__input");
+        
+            /*=== Add focus ===*/
+            function addfocus() {
+                let parent = this.parentNode.parentNode;
+                parent.classList.add("focus");
+            }
+        
+            /*=== Remove focus ===*/
+            function remfocus() {
+                let parent = this.parentNode.parentNode;
+                if (this.value == "") {
+                    parent.classList.remove("focus");
+                }
+            }
+        
+            /*=== To call function===*/
+            inputs.forEach(input => {
+                input.addEventListener("focus", addfocus);
+                input.addEventListener("blur", remfocus);
+            });
+        </script>
+        
+    </body>
+</html>

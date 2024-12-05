@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- ===== CSS ===== -->
+        <link rel="stylesheet" href="style.css">
+
+        <!-- ===== BOX ICONS ===== -->
+        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+        <title>Deposit Money</title>
+    </head>
+    <body>
+        <div class="l-form">
+            <div class="shape1"></div>
+            <div class="shape2"></div>
+
+            <div class="form">
+                <form id="depositeForm" class="form__content">
+                    <h1 class="form__title">Deposit Money</h1>
+
+                    <div class="form__div form__div-one">
+                        <div class="form__icon">
+                            <i class='bx bx-phone'></i>
+                        </div>
+
+                        <div class="form__div-input">
+                            <label for="phone" class="form__label">Phone Number</label>
+                            <input type="text" id="phone" class="form__input" pattern="^\d{10}$" title="Please enter a valid 10-digit phone number" required>
+                        </div>
+                    </div>
+
+                    <div class="form__div">
+                        <div class="form__icon">
+                            <i class='bx bx-lock'></i>
+                        </div>
+
+                        <div class="form__div-input">
+                            <label for="password" class="form__label">Password</label>
+                            <input type="password" id="password" class="form__input" required>
+                        </div>
+                    </div>
+
+                    <div class="form__div">
+                        <div class="form__icon">
+                            <i class='bx bx-money'></i>
+                        </div>
+
+                        <div class="form__div-input">
+                            <label for="money" class="form__label">Money to Deposit</label>
+                            <input type="number" id="money" class="form__input" max="500000" required>
+                        </div>
+                    </div>
+
+                    <input type="submit" class="form__button" value="Deposit">
+                </form>
+            </div>
+        </div>
+
+        <script>
+            // Handle form submission and validate phone and password
+            document.getElementById('depositeForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent form from submitting
+
+                // Get the form values
+                const phone = document.getElementById('phone').value;
+                const password = document.getElementById('password').value;
+                const money = document.getElementById('money').value;
+
+                // Retrieve stored data from localStorage
+                const storedPhone = localStorage.getItem('userPhone');
+                const storedPassword = localStorage.getItem('userPassword');
+
+                // Validate phone number and password
+                if (phone !== storedPhone || password !== storedPassword) {
+                    alert("Invalid phone number or password. Please try again.");
+                    return; // Stop form submission if validation fails
+                }
+
+                // Check if money value is within valid range
+                if (money > 500000) {
+                    alert("You can deposit a maximum of 500,000.");
+                    return;
+                }
+
+                // Store the deposit amount in localStorage if necessary
+                localStorage.setItem('userMoney', money);
+
+                // Optionally, alert the user
+                alert("Deposit successful!");
+            });
+
+            /*===== FOCUS =====*/
+            const inputs = document.querySelectorAll(".form__input");
+
+            /*=== Add focus ===*/
+            function addfocus() {
+                let parent = this.parentNode.parentNode;
+                parent.classList.add("focus");
+            }
+
+            /*=== Remove focus ===*/
+            function remfocus() {
+                let parent = this.parentNode.parentNode;
+                if (this.value == "") {
+                    parent.classList.remove("focus");
+                }
+            }
+
+            /*=== To call function===*/
+            inputs.forEach(input => {
+                input.addEventListener("focus", addfocus);
+                input.addEventListener("blur", remfocus);
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdraw Money</title>
+
+    <!-- Include your CSS file here -->
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="l-form">
+        <div class="shape1"></div>
+        <div class="shape2"></div>
+
+        <div class="form">
+            <form id="withdrawForm" class="form__content">
+                <h1 class="form__title">Withdraw Money</h1>
+
+                <!-- Phone Number Field -->
+                <div class="form__div">
+                    <div class="form__icon">
+                        <i class='bx bx-user-circle'></i>
+                    </div>
+                    <div class="form__div-input">
+                        <label for="phone" class="form__label">Phone No</label>
+                        <input type="text" id="phone" class="form__input" >
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form__div">
+                    <div class="form__icon">
+                        <i class='bx bx-lock'></i>
+                    </div>
+                    <div class="form__div-input">
+                        <label for="password" class="form__label">Password</label>
+                        <input type="password" id="password" class="form__input" >
+                    </div>
+                </div>
+
+                <input type="submit" class="form__button" value="Show Balance">
+                 <!-- Balance Display -->
+                <div id="balanceDisplay" class="balance-display" style="display: none;">
+                    <h2>Your Current Balance:</h2>
+                    <div id="balanceAmount" class="balance-amount"></div>
+                </div>
+            </div>
+        </div>
+            </form>
+
+
+    <script>
+        // Handle form submission and display balance
+        document.getElementById('withdrawForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get form values
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+
+            // Retrieve stored data from localStorage
+            const storedPhone = localStorage.getItem('userPhone');
+            const storedPassword = localStorage.getItem('userPassword');
+            const storedMoney = localStorage.getItem('userMoney');
+
+            // Validate phone number and password
+            if (phone !== storedPhone || password !== storedPassword) {
+                alert("Invalid phone number or password. Please try again.");
+                return;
+            }
+
+            // Show the balance if authentication is successful
+            if (storedMoney) {
+                document.getElementById('balanceAmount').textContent = `₹${storedMoney}`;
+                document.getElementById('balanceDisplay').style.display = 'block';
+            } else {
+                alert("No balance found. Please deposit money first.");
+            }
+        });
+                          /*===== FOCUS =====*/
+                          const inputs = document.querySelectorAll(".form__input");
+
+/*=== Add focus ===*/
+function addfocus() {
+    let parent = this.parentNode.parentNode;
+    parent.classList.add("focus");
+}
+
+/*=== Remove focus ===*/
+function remfocus() {
+    let parent = this.parentNode.parentNode;
+    if (this.value == "") {
+        parent.classList.remove("focus");
+    }
+}
+
+/*=== To call function===*/
+inputs.forEach(input => {
+    input.addEventListener("focus", addfocus);
+    input.addEventListener("blur", remfocus);
+});
+    </script>
+</body>
+</html>
